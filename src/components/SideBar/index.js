@@ -3,7 +3,8 @@ import {MdGpsFixed} from 'react-icons/md'
 import Clear from '../../assets/images/Clear.png'
 
 import Button from '../Button'
-export default function index() {
+
+export default function SideBar() {
     return (
         <div className="container mx-auto px-5">
             {/* search place */}

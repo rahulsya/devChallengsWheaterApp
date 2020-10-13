@@ -12,5 +12,5 @@ export const getByLocationId=(id)=>{
 }
 
 export const getBySearch=(keyword)=>{
-    return Axios.get(`${CORS_URL}/${BASE_URL}/seacrh/?query=${keyword}`)
+    return Axios.get(`${CORS_URL}/${BASE_URL}/search/?query=${keyword}`)
 }
