@@ -4,34 +4,39 @@ import React from 'react';
 import SideBar from './components/SideBar'
 import MainContent from './components/MainContent'
 
+import {WheaterContext} from './context/wheater-context'
 import {getBylocation,getByLocationId} from './api/getApiWheater'
-import {InfoLocationConxtex} from './context/infoLocation-context'
 import useLocation from './hooks/location'
 
 function App() {
 
-//   const {location,setLocation}=React.useContext(InfoLocationConxtex)
-//   const {latitude,longitude}=useLocation()
-
-//   const[dailyWheater,setDailyWheater]=React.useState([])
+  const {state,dispatch}=React.useContext(WheaterContext)
+  const {latitude,longitude}=useLocation()
 
 //   React.useEffect(()=>{
 //     if (latitude && longitude) {
 //       getBylocation(latitude ,longitude)
-//       .then(response=>setLocation(response.data[0]))
+//       .then(response=>setState(state.currentLocation=response.data[0]))
 //       .catch(err=>console.log(err.message))
 //     }
-//   },[setLocation,latitude,longitude])
+//   },[latitude,longitude])
 
 
 // React.useEffect(()=>{
-//   if (location.woeid) {  
+//   if (state.currentLocation.woeid) {  
 //     getByLocationId(location.woeid)
 //     .then(response=>setDailyWheater(response.data.consolidated_weather))
 //     .catch(err=>console.log(err))
 //   }
 // },[location.woeid])
-  
+
+React.useEffect(()=>{
+dispatch({
+    type:"TEST",
+    data:'hello'
+  })
+},[])
+console.log(state);
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="w-full lg:w-3/12 bg-liteBlue h-auto lg:h-screen">

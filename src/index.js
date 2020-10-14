@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import "./styles/tailwind.css"
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {InfoLocationContextProvider} from './context/infoLocation-context'
+import {WheaterContextProvider} from './context/wheater-context'
 
 ReactDOM.render(
   <React.StrictMode>
-    <InfoLocationContextProvider>
+    <WheaterContextProvider>
 
     <App />
-    </InfoLocationContextProvider>
+    </WheaterContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

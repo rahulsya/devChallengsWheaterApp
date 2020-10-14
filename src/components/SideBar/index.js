@@ -16,7 +16,7 @@ export default function SideBar() {
                     <MdGpsFixed/>
                 </Button>
             </div>
-            <div className="flex flex-col justify-between items-center text-white py-5">
+            <div className="grid grid-cols lg:gap-32 place-content-center text-center py-5  text-white ">
                 <img src={Clear} alt="clear" className="mt-5"/>
                 <div className="text-6xl mt-5">
                     15 °c
