@@ -5,41 +5,59 @@ import SideBar from './components/SideBar'
 import MainContent from './components/MainContent'
 
 import {WheaterContext} from './context/wheater-context'
+import {getCurrentLocation,getDailyWheater} from './context/action'
+
 import {getBylocation,getByLocationId} from './api/getApiWheater'
-import useLocation from './hooks/location'
+
+const statusList = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
 
 function App() {
-
+  const [status,setStatus]=React.useState(statusList.idle)
   const {state,dispatch}=React.useContext(WheaterContext)
-  const {latitude,longitude}=useLocation()
 
-//   React.useEffect(()=>{
-//     if (latitude && longitude) {
-//       getBylocation(latitude ,longitude)
-//       .then(response=>setState(state.currentLocation=response.data[0]))
-//       .catch(err=>console.log(err.message))
-//     }
-//   },[latitude,longitude])
+  React.useEffect(()=>{
+    (async()=>{
+      try {
+        setStatus(statusList.process)
+        
+        let response=await getBylocation('-6.2706','106.8849')
+        dispatch(getCurrentLocation(response.data[0]))
 
+        setStatus(statusList.success)
+      } catch (error) {
+        console.error(error.message)
+      }
+    })()
+  },[dispatch])
 
-// React.useEffect(()=>{
-//   if (state.currentLocation.woeid) {  
-//     getByLocationId(location.woeid)
-//     .then(response=>setDailyWheater(response.data.consolidated_weather))
-//     .catch(err=>console.log(err))
-//   }
-// },[location.woeid])
 
 React.useEffect(()=>{
-dispatch({
-    type:"TEST",
-    data:'hello'
-  })
-},[])
-console.log(state);
+  if (state.currentLocation.woeid) {  
+    (async()=>{
+      try {
+        setStatus(statusList.process)
+        let reponse=await getByLocationId(state.currentLocation.woeid)
+        dispatch(getDailyWheater(reponse.data))
+        
+        setStatus(statusList.success)
+      } catch (err) {
+        console.error(err.message);
+      }
+    })()
+  }
+},[dispatch,state.currentLocation.woeid])
+
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="w-full lg:w-3/12 bg-liteBlue h-auto lg:h-screen">
+        <div className="text-3xl text-white">
+          {status}
+        </div>
         <SideBar/>
       </div>
       <div className="w-full bg-darkBlue h-auto lg:h-screen">
