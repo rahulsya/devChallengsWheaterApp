@@ -1,19 +1,27 @@
 import React from 'react'
+import {
+    GET_LOCATION,
+    GET_DAILY_WHEATER
+} from './constant'
 
 export const WheaterContext=React.createContext()
 
 const initalState={
-    currentLocation:["hhe"],
-    dailyWheater:["daily"],
+    currentLocation:[],
+    dailyWheater:[],
 }
 const reducer=(state,action)=>{
     switch(action.type){
-        case 'TEST':
-            console.log(action);
+        case GET_LOCATION:
             return {
                 ...state,
-                currentLocation:[...state.currentLocation,action.data]
+                currentLocation:action.data
             }
+            case GET_DAILY_WHEATER:
+                return{
+                    ...state,
+                    dailyWheater:action.data
+                }
         default:return state
     }
 }
