@@ -24,10 +24,13 @@ export default function MainContent({wheaterItems}) {
                     return (
                         <div 
                         key={index} 
-                        className="py-4 px-3 flex flex-col bg-liteBlue w-full 
+                        className={`py-4 px-3 flex flex-col 
+                        justify-between
+                        ${currentWheater===wheaterItem ?`bg-gray-900` : `bg-liteBlue`}
+                        w-full h-56 
                         cursor-pointer
                         hover:bg-opacity-50
-                        transition duration-300" 
+                        transition duration-300`} 
                         onClick={()=>setCurrentWheater(wheaterItem)}>
                             
                             <div className="self-center capitalize">

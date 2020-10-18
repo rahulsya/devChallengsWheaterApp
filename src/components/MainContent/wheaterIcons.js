@@ -42,7 +42,7 @@ export default [
     },
     {
         id:8,
-        name:'Shower',
+        name:'Showers',
         img_url:Shower
     },
     {
