@@ -7,15 +7,39 @@ import dateFormat from '../../utils/dateFormat'
 import Button from '../Button'
 import Search from './Search'
 
+import {getBySearch} from '../../api/getApiWheater'
+
 export default function SideBar({wheater,location}) {
     let icon=icons.find(icon=>icon.name===wheater.weather_state_name)
-
     const [activeSearch,setActiveSearch]=React.useState(false)
+    const [keyword,setKeyword]=React.useState("")
+    // store the result search wheater
+    const [results,setResults]=React.useState([])
 
+    const handleChange=(e)=>{
+        setKeyword(e.target.value)
+    }
+    
+    const handleSubmit=(e)=>{
+        e.preventDefault()
+        getBySearch(keyword)
+        .then(response=>{
+            setResults(response.data)
+            setKeyword('')
+        })
+        .catch(err=>console.log(err.message))
+    }
+    
     if (activeSearch===true) {
         return (
-            <Search activeSearch={activeSearch}
-            setActiveSearch={setActiveSearch}/>
+            <Search 
+            value={keyword}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            activeSearch={activeSearch}
+            setActiveSearch={setActiveSearch}
+            wheaterResults={results}
+            />
         )
     }
     return (
