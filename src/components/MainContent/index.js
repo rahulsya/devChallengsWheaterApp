@@ -6,18 +6,32 @@ import Button from '../Button'
 import HighlightWheater from './HighlightWheater'
 import dateFormat from '../../utils/dateFormat'
 
-export default function MainContent({wheaterItems}) {
+import {convertTempreature} from '../../context/action'
+import celciusToFahren from '../../utils/celciusToFahren'
+
+export default function MainContent({wheaterItems,typeTemp,dispatch}) {
     const [wheaterItem,...wheaterItemss]=wheaterItems
 
     let [currentWheater,setCurrentWheater]=React.useState(wheaterItem)
     return (
         <div className="container mx-auto px-3 lg:px-5 text-white">
+
             <div className="mt-5 flex justify-end items-center">
                 <div className="px-5">
-                    <Button bgColor="gray-100" color="gray-800" borderRadius="full">C</Button>
+                <Button 
+                onClick={()=>dispatch(convertTempreature('c'))}
+                bgColor={`${typeTemp==='c' ? 'gray-100' :'gray-600'}`} 
+                color={`${typeTemp==='c' ? 'gray-800' :''}`} 
+                borderRadius="full">C</Button>
                 </div>
-                <Button className="pl-4" borderRadius="full">F</Button>
+                <Button 
+                onClick={()=>dispatch(convertTempreature('f'))}
+                bgColor={`${typeTemp==='f' ? 'gray-100' :'gray-600'}`}
+                color={`${typeTemp==='f' ? 'gray-800' :''}`} 
+                className="pl-4" 
+                borderRadius="full">F</Button>
             </div>
+
             <div className="mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 place-items-center gap-2 lg:gap-4">
                 {wheaterItemss.map((wheaterItem,index)=>{
                     let icon=icons.find(icon=>icon.name===wheaterItem.weather_state_name)
@@ -26,7 +40,7 @@ export default function MainContent({wheaterItems}) {
                         key={index} 
                         className={`py-4 px-3 flex flex-col 
                         justify-between
-                        ${currentWheater===wheaterItem ?`bg-gray-900` : `bg-liteBlue`}
+                        ${currentWheater===wheaterItem ?`bg-blue-900` : `bg-liteBlue`}
                         w-full h-56 
                         cursor-pointer
                         hover:bg-opacity-50
@@ -41,8 +55,16 @@ export default function MainContent({wheaterItems}) {
                             alt={`wheater ${index}`} 
                             className="w-32 self-center" />
                             <div className="flex justify-between px-5">
-                                <div>{wheaterItem.max_temp.toString().split('.')[0]} °C</div>
-                                <div className="text-gray-600">{wheaterItem.min_temp.toString().split('.')[0]} °C</div>
+                                <div>
+                                    {typeTemp==='f' 
+                                    ? `${celciusToFahren(wheaterItem.max_temp.toFixed(0))} °F` 
+                                    : `${wheaterItem.max_temp.toFixed(0)} °C`}
+                                </div>
+                                <div className="text-gray-600">
+                                {typeTemp==='f' 
+                                    ? `${celciusToFahren(wheaterItem.min_temp.toFixed(0))} °F` 
+                                    : `${wheaterItem.min_temp.toFixed(0)} °C`}
+                                </div>
                             </div>
                             
                         </div>
