@@ -7,6 +7,7 @@ import {getBySearch} from '../../api/getApiWheater'
 import {WheaterContext} from '../../context/wheater-context'
 import {getCurrentLocation} from '../../context/action'
 
+
 export default function Search({activeSearch,setActiveSearch}) {
     const [keyword,setKeyword]=React.useState("")
     // store the result of search wheater
@@ -27,13 +28,15 @@ export default function Search({activeSearch,setActiveSearch}) {
         })
         .catch(err=>console.log(err.message))
     }
+
     return (
         <div className="container mx-auto items-center px-5 mt-5 text-white">
             <div className={`flex justify-between items-center mt-5 ${activeSearch===true ? 'hidden' :''}`}>
                 <Button onClick={()=>setActiveSearch(!activeSearch)}>
                     Search for places
                 </Button>
-                <Button borderRadius="full">
+                <Button 
+                borderRadius="full">
                     <MdGpsFixed/>
                 </Button>
             </div>
@@ -65,7 +68,8 @@ export default function Search({activeSearch,setActiveSearch}) {
                         "
                         onClick={()=>{
                             dispatch(getCurrentLocation(item)) 
-                            setActiveSearch(!activeSearch)}}
+                            setActiveSearch(!activeSearch)
+                        }}
                         >
                             {item.title}
                         </div>
