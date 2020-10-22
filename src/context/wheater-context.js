@@ -1,7 +1,8 @@
 import React from 'react'
 import {
     GET_LOCATION,
-    GET_DAILY_WHEATER
+    GET_DAILY_WHEATER,
+    SET_TEMPERATURE
 } from './constant'
 
 export const WheaterContext=React.createContext()
@@ -9,6 +10,7 @@ export const WheaterContext=React.createContext()
 const initalState={
     currentLocation:[],
     dailyWheater:[],
+    currentTemp:'c',
 }
 const reducer=(state,action)=>{
     switch(action.type){
@@ -21,6 +23,11 @@ const reducer=(state,action)=>{
                 return{
                     ...state,
                     dailyWheater:action.data
+                }
+            case SET_TEMPERATURE :
+                return{
+                    ...state,
+                    currentTemp:action.payload
                 }
         default:return state
     }
