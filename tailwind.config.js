@@ -162,6 +162,8 @@ module.exports = {
       '56': '14rem',
       '64': '16rem',
       '72': '18rem',
+      '600':'600px',
+      '900':'900px'
     },
     backgroundColor: theme => theme('colors'),
     backgroundImage: {
@@ -258,9 +260,10 @@ module.exports = {
     },
     fontFamily: {
       sans: [
-        'system-ui',
-        '-apple-system',
-        'BlinkMacSystemFont',
+        'Raleway',
+        '"system-ui"',
+        '"-apple-system"',
+        '"BlinkMacSystemFont"',
         '"Segoe UI"',
         'Roboto',
         '"Helvetica Neue"',
@@ -274,6 +277,7 @@ module.exports = {
       ],
       serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: ['Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+      
     },
     fontSize: {
       xs: '0.75rem',
