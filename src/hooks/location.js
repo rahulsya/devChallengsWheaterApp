@@ -3,6 +3,7 @@ import React from 'react'
 export default function useLocation() {
     const [latitude,setLatitude]=React.useState("")
     const [longitude,setLongitude]=React.useState("")
+    const [messageStatus,setMessageStatus]=React.useState("")
 
     React.useEffect(()=>{
         if (navigator.geolocation) {
@@ -12,7 +13,7 @@ export default function useLocation() {
                     setLongitude(position.coords.longitude)
                 }),
                 (error=>{
-                    console.log(error.message);
+                    setMessageStatus(error.message)
                 })
             )
         }else{
@@ -23,6 +24,7 @@ export default function useLocation() {
     
     return{
         latitude,
-        longitude
+        longitude,
+        messageStatus
     }
 }
