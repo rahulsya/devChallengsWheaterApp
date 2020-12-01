@@ -3,10 +3,11 @@ import {MdGpsFixed} from 'react-icons/md'
 
 import Button from '../Button'
 
-import {getBySearch} from '../../api/getApiWheater'
+import {getBySearch,getBylocation,} from '../../api/getApiWheater'
 import {WheaterContext} from '../../context/wheater-context'
 import {getCurrentLocation} from '../../context/action'
 
+import useLocation from '../../hooks/location'
 
 export default function Search({activeSearch,setActiveSearch}) {
     const [keyword,setKeyword]=React.useState("")
@@ -14,6 +15,8 @@ export default function Search({activeSearch,setActiveSearch}) {
     const [results,setResults]=React.useState([])
     
     const {dispatch}=React.useContext(WheaterContext)
+
+    const{longitude,latitude}=useLocation()
 
     const handleChange=(e)=>{
         setKeyword(e.target.value)
@@ -29,13 +32,25 @@ export default function Search({activeSearch,setActiveSearch}) {
         .catch(err=>console.log(err.message))
     }
 
+    const handleGetLocation=()=>{
+        (async()=>{
+            try {
+              let response=await getBylocation(latitude,longitude)
+              dispatch(getCurrentLocation(response.data[0]))
+            } catch (error) {
+              console.error(error.message)
+            }
+          })()
+    }
+
     return (
         <div className="container mx-auto items-center px-5 mt-5 text-white">
             <div className={`flex justify-between items-center mt-5 ${activeSearch===true ? 'hidden' :''}`}>
                 <Button onClick={()=>setActiveSearch(!activeSearch)}>
                     Search for places
                 </Button>
-                <Button 
+                <Button
+                onClick={()=>handleGetLocation()} 
                 borderRadius="full">
                     <MdGpsFixed/>
                 </Button>
