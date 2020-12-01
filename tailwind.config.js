@@ -1,15 +1,9 @@
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
+    purgeLayersByDefault: true,
   },
-  purge: {
-    content: [
-      'src/**/*.js',
-      'src/**/*.jsx',
-      'public/**/*.html',
-    ]
-},
+  purge: ['src/**/*.js'],
   target: 'relaxed',
   prefix: '',
   important: false,
